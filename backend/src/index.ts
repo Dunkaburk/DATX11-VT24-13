@@ -1,11 +1,13 @@
 import { config } from "dotenv";
 import express from "express";
 import assignmentRouter from "./routers/assignmentRouter";
+import categoryRouter from "./routers/categoryRouter";
 
 const app = express();
 config();
 
-app.use("/assignments", assignmentRouter)
+app.use("/assignments", assignmentRouter);
+app.use("/category", categoryRouter);
 
 app.get("/:name", (req, res) => {
 	const name = req.params.name;
