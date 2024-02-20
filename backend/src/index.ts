@@ -9,9 +9,7 @@ app.use("/assignments", assignmentRouter)
 
 app.get("/:name", (req, res) => {
 	const name = req.params.name;
-	if (!name)
-		res.status(200).send("Hej =)");
-	else res.status(200).send(`Hej ${name}`);
+	res.status(200).send(`Hej ${name}`);
 });
 
 app.listen(process.env.PORT || 3000, () => { console.log(`Server started on ${process.env.PORT || 3000}`) });
