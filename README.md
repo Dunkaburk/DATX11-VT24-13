@@ -17,10 +17,7 @@ DATX11-24-13_Python Tutorial Package
 
 2. Lägg till prisma till projektet med följande kommandon i backend-directoriet:
     ```
-     npm install prisma --save-dev
-    ```
-    ```
-     npm install @prisma/client
+     npm install
     ```
     ```
      npx prisma generate
