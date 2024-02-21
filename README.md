@@ -5,6 +5,10 @@ DATX11-24-13_Python Tutorial Package
 ## Databas
 - Databasens tabeller bestäms av schemat i 
     - /prisma/schema.prisma
+    - När ändringar i schemat görs uppdaterar man databasen genom att köra
+        ```
+        npx prisma migrate
+        ```
 - Exempel på anrop till databasen finns i index.ts
 
 
@@ -19,20 +23,19 @@ DATX11-24-13_Python Tutorial Package
      npm install @prisma/client
     ```
     ```
-     prisma generate
+     npx prisma generate
     ```
     
 3. Se till att din .env fil innehåller variabeln DATABASE_URL på följande form:
-    - DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA
+    - ```javascript
+        DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA"
+        ```
 - **Exempel:** Agnes har i postgresinstallationen satt både user och password till "postgres" samt använt standardport 5432. Innehållet i hennes .env fil ser därför ut som följer:
-    - DATABASE_URL="postgresql://postgres:postgres@localhost:5432/kandidat?schema=public"
+    - ```javascript
+        DATABASE_URL="postgresql://postgres:postgres@localhost:5432/kandidat?schema=public"
+        ```
 
 4. För att sätta upp databas och lägga till tabeller kör kommando:
-    ```
-     npx prisma migrate
-    ```
-    Om det inte funkar, pröva:
-
     ```
      npx prisma migrate dev --name init
     ```
