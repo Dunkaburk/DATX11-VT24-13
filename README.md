@@ -9,21 +9,12 @@ DATX11-24-13_Python Tutorial Package
         ```
         npx prisma migrate
         ```
-- Exempel på anrop till databasen finns i index.ts
 
 
 ### Sätta upp databas i lokal utvecklingsmiljö
 1. Se till att postgres är installerat https://www.postgresql.org/download/
 
-2. Lägg till prisma till projektet med följande kommandon i backend-directoriet:
-    ```
-     npm install
-    ```
-    ```
-     npx prisma generate
-    ```
-    
-3. Se till att din .env fil innehåller variabeln DATABASE_URL på följande form:
+2. Se till att din .env fil innehåller variabeln DATABASE_URL på följande form:
     - ```javascript
         DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA"
         ```
@@ -32,7 +23,16 @@ DATX11-24-13_Python Tutorial Package
         DATABASE_URL="postgresql://postgres:postgres@localhost:5432/kandidat?schema=public"
         ```
 
-4. För att sätta upp databas och lägga till tabeller kör kommando:
+
+3. Lägg till prisma till projektet med följande kommandon i backend-directoriet:
+    ```
+     npm install
+    ```
+    ```
+     npx prisma generate
+    ```
+    
+4. För att initiera databas kör kommando:
     ```
      npx prisma migrate dev --name init
     ```
