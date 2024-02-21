@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id    Int    @id @default(autoincrement())
+  name  String @db.VarChar(255)
+  level Int    @default(1)
+}
+
+model Task {
+  id              Int    @id @default(autoincrement())
+  title           String @db.VarChar(255)
+  text            String
+  level           Int
+  solution        String
+  belongsToModule Module @relation(fields: [moduleName], references: [name])
+  moduleName      String @db.VarChar(255)
+}
+
+model Module {
+  name String @id @db.VarChar(255)
+  Task Task[]
+}
