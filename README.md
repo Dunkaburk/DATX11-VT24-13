@@ -3,12 +3,7 @@ DATX11-24-13_Python Tutorial Package
 
 
 ## Databas
-- Databasens tabeller bestäms av schemat i 
-    - /prisma/schema.prisma
-    - När ändringar i schemat görs uppdaterar man databasen genom att köra
-        ```
-        npx prisma migrate
-        ```
+- Databasens tabeller bestäms av schemat i /prisma/schema.prisma
 
 
 ### Sätta upp databas i lokal utvecklingsmiljö
@@ -31,5 +26,5 @@ DATX11-24-13_Python Tutorial Package
 
 4. För att initiera databas kör kommando:
     ```
-     npx prisma migrate dev --name init
+     npx prisma migrate dev
     ```
