@@ -1,16 +1,23 @@
+import { Role } from "@prisma/client"
 import { prisma } from "./prisma"
 
 
 export async function getAllStudents() {
-	const allStudents = await prisma.student.findMany()
+	const allStudents = await prisma.user.findMany({
+		where: {
+			role: "STUDENT"
+		}
+	})
 	console.log(allStudents)
 	return allStudents
 }
 
-export async function addStudent(name: string) {
-	await prisma.student.create({
+export async function addStudent(id: string, name: string, course: string) {
+	await prisma.user.create({
 		data: {
-			name: name
+			id: 	id,
+			name: 	name,
+			course: course
 		}
 	})
 }

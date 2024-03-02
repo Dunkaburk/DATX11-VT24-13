@@ -13,23 +13,50 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Student {
-  id    Int    @id @default(autoincrement())
-  name  String @db.VarChar(255)
-  level Int    @default(1)
+model User {
+  id          String          @id @db.VarChar(255)
+  name        String          @db.VarChar(255)
+  course      String
+  role        Role            @default(STUDENT)
+  solvedTasks SolvedTasks[]
 }
 
 model Task {
-  id              Int    @id @default(autoincrement())
-  title           String @db.VarChar(255)
-  text            String
-  level           Int
-  solution        String
-  belongsToModule Module @relation(fields: [moduleName], references: [name])
-  moduleName      String @db.VarChar(255)
+  id            Int           @id @default(autoincrement())
+  title         String        @db.VarChar(255)
+  description   String
+  code          String
+  solution      String
+  level         Level         @default(BEGINNER)
+  modules       Module[]
+  solvedTasks   SolvedTasks[]
+}
+
+model SolvedTasks {
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
+  task      Task    @relation(fields: [taskId], references: [id])
+  taskId    Int
+  solution  String
+  noOfTries Int
+  @@id([userId, taskId])
 }
 
 model Module {
   name String @id @db.VarChar(255)
-  Task Task[]
+  tasks Task[]
+}
+
+enum Role {
+  STUDENT
+  TEACHER
+  TEACHINGASSISTANT
+}
+
+enum Level {
+  BEGINNER
+  UPPER_BEGINNER
+  INTERMEDIATE
+  UPPER_INTERMEDIATE
+  ADVANCED
 }

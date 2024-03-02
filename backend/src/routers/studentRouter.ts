@@ -21,9 +21,11 @@ studentRouter.get("/getAll", (req, res) => {
 
 
 
-studentRouter.get("/add/:name", (req, res) => {
+studentRouter.get("/add/:id/:name/:course", (req, res) => {
+	const id = req.params.id;
 	const name = req.params.name;
-	addStudent(name)
+	const course = req.params.course;
+	addStudent(id, name, course)
 		.then(async () => {
 			await prisma.$disconnect()
 			res.status(200).send(`${name} has been added to database.`);

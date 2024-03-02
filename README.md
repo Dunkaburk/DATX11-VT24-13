@@ -12,26 +12,23 @@ DATX11-24-13_Python Tutorial Package
 
 
 ### Sätta upp databas i lokal utvecklingsmiljö
-1. Se till att postgres är installerat https://www.postgresql.org/download/
+1. Veva igång Docker och kör sedan följande kommando i directory DATX11-VT24-13
+    ```javascript
+    docker compose up  
+    ```
 
 2. Se till att din .env fil innehåller variabeln DATABASE_URL på följande form:
-    - ```javascript
-        DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA"
-        ```
-- **Exempel:** Agnes har i postgresinstallationen satt både user och password till "postgres" samt använt standardport 5432. Innehållet i hennes .env fil ser därför ut som följer:
-    - ```javascript
-        DATABASE_URL="postgresql://postgres:postgres@localhost:5432/kandidat?schema=public"
-        ```
-
-
-3. Lägg till prisma till projektet med följande kommandon i backend-directoriet:
+    ```javascript
+    DATABASE_URL="postgresql://g13:pass123@localhost:5433/assignments?schema=public"
+    ```
+3. Lägg till prisma till projektet med följande kommandon i directory backend:
     ```
      npm install
     ```
     ```
      npx prisma generate
     ```
-    
+
 4. För att initiera databas kör kommando:
     ```
      npx prisma migrate dev --name init
