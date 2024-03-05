@@ -4,11 +4,10 @@ services:
   postgres:
     image: postgres:14-alpine
     ports:
-      - 5433:5432
+      - 5432:5432
     volumes:
       - ~/apps/postgres:/var/lib/postgresql/data
     environment:
-      PGUSER: g13
       POSTGRES_PASSWORD: pass123
       POSTGRES_USER: g13
       POSTGRES_DB: assignments
