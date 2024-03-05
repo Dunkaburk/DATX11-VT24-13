@@ -1,0 +1,12 @@
+:root{
+
+    --peach: #E89F6A;
+    --banana: #FFE873;
+    --watermelon: #E86A92;
+    --mint: #41E2BA;
+    --sky: #88CAFF;
+}
+#test{
+    color: var(--banana)
+    
+}
