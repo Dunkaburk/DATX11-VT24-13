@@ -8,6 +8,7 @@ import studentRouter from "./routers/studentRouter";
 const app = express();
 config();
 
+app.use(express.json());
 
 app.use("/assignments", assignmentRouter);
 app.use("/category", categoryRouter);
