@@ -2,7 +2,7 @@ import { config } from "dotenv";
 import express from "express";
 import assignmentRouter from "./routers/assignmentRouter";
 import categoryRouter from "./routers/categoryRouter";
-import studentRouter from "./routers/studentRouter";
+import userRouter from "./routers/userRouter";
 
 
 const app = express();
@@ -11,7 +11,7 @@ config();
 
 app.use("/assignments", assignmentRouter);
 app.use("/category", categoryRouter);
-app.use("/student", studentRouter)
+app.use("/user", userRouter)
 
 
 app.get("/:name", (req, res) => {

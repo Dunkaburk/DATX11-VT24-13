@@ -3,21 +3,20 @@ import { prisma } from "./prisma"
 
 
 export async function getAllStudents() {
-	const allStudents = await prisma.user.findMany({
+	return await prisma.user.findMany({
 		where: {
-			role: "STUDENT"
+			role: Role.STUDENT
 		}
 	})
-	console.log(allStudents)
-	return allStudents
 }
 
-export async function addStudent(id: string, name: string, course: string) {
+export async function addUser(id: string, name: string, course: string, role: Role) {
 	await prisma.user.create({
 		data: {
 			id: 	id,
 			name: 	name,
-			course: course
+			course: course,
+			role: role
 		}
 	})
 }
