@@ -6,7 +6,7 @@ var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
 const moduleRouter = Router();
 
-moduleRouter.get("/getModules", jsonParser, (req, res) => { 
+moduleRouter.get("/getModules", jsonParser, (req, res) => {
     getModules()
 		.then(async modules => {
 			res.json(modules).status(200).send();
@@ -21,11 +21,11 @@ moduleRouter.get("/getModules", jsonParser, (req, res) => {
 });
 
 //Returns a list with id and name of each task in a module
-moduleRouter.get("/getModuleTasks", jsonParser, (req, res) => { 
+moduleRouter.get("/getModuleTasks", jsonParser, (req, res) => {
     const data = req.body;
-	const id = data.id ? data.id : null;
-	const module = data.module ? data.module : null;
-    if (!module) {
+	const id = data.id;
+	const module = data.module;
+	if (!module || !id) {
 		res.status(404).send(`An error occured while trying to fetch tasks: Missing information.
 					Following values were received:
 				 	id = ${id}, name = ${module}`);
@@ -46,7 +46,7 @@ moduleRouter.get("/getModuleTasks", jsonParser, (req, res) => {
 });
 
 moduleRouter.post("/addModule", jsonParser, (req, res) => {
-	const name = req.body.name ? req.body.name : null;
+	const name = req.body.name;
 	if (!name) {
 		res.status(404).send(`An error occured while trying to add user: Missing module name.`);
 		return;

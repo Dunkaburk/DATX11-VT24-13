@@ -1,4 +1,3 @@
-import { Role } from "@prisma/client"
 import { prisma } from "./prisma"
 
 export async function getModules() {
