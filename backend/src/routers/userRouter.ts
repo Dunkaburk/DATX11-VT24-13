@@ -6,7 +6,7 @@ var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
 const studentRouter = Router();
 
-studentRouter.get("/getAllStudents", jsonParser, async (req, res) => {
+studentRouter.get("/getAllStudents", (req, res) => {
 	getAllStudents()
 		.then(async students => {
 			res.json(students).status(200).send();
@@ -33,7 +33,7 @@ studentRouter.post("/addUser", jsonParser, (req, res) => {
 	}
 	addUser(id, name, course, role)
 		.then(async () => {
-			await prisma.$disconnect()
+			await prisma.$disconnect();
 			res.status(200).send();
 		})
 		.catch(async (e) => {
