@@ -1,20 +1,6 @@
 import { Role } from "@prisma/client"
 import { prisma } from "./prisma"
 
-export async function getTasksInModule(userId : string, moduleName : string) {
-	const tasks = await prisma.module.findMany({
-        where: {
-            name: moduleName
-        },
-        include: {
-            tasks: true
-        }
-    });
-    console.log(tasks)
-    return tasks;
-    for (const task of tasks) { }
-}
-
 export async function getModules() {
 	return await prisma.module.findMany();
 }
