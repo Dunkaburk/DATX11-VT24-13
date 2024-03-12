@@ -1,6 +1,6 @@
 "use client"
 import callAPI from "@/hooks/apiHooks";
-import styles from "./page.module.css";
+import styles from "./index.module.css";
 import { useState, useEffect } from "react";
 import Card from "@/components/Card";
 
@@ -14,10 +14,6 @@ export default function Home() {
   useEffect(() => {
     callAPI({ route: "/api/category/getAll", method: "GET", data: {} }).then((res) => useCat(res));
   }, []);
-  /* useEffect(() => {
-
-  }, []); */
-
 
   return (
     <main className={styles.main}>
