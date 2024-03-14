@@ -1,4 +1,5 @@
 import { config } from "dotenv";
+import cors from 'cors';
 import express from "express";
 import taskRouter from "./routers/taskRouter";
 import categoryRouter from "./routers/categoryRouter";
@@ -9,6 +10,8 @@ import moduleRouter from "./routers/moduleRouter";
 const app = express();
 config();
 
+app.use(express.json());
+app.use(cors());
 
 app.use("/task", taskRouter);
 app.use("/category", categoryRouter);
