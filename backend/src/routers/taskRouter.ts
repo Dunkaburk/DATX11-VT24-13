@@ -3,15 +3,33 @@ import { prisma } from "../services/prisma";
 import { addTask } from "../services/taskService";
 import { Level } from "@prisma/client";
 
+
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
 const taskRouter = Router();
+const lti = require('ltijs').Provider
+
 
 taskRouter.get("/next", (req, res) => { res.status(501).send("OoOps, not implemented") });
 taskRouter.get("/previous", (req, res) => { res.status(501).send("OoOps, not implemented") });
 taskRouter.post("/submit", (req, res) => { res.status(501).send("OoOps, not implemented") });
 taskRouter.get("/:err", (req, res) => { res.status(404).send() });
 
+// Example of how to use the LTI NamesAndRoles service
+taskRouter.get('/members', async (req, res) => {
+    try {
+      const result = await lti.NamesAndRoles.getMembers(res.locals.token)
+      if (result) return res.send(result.members)
+      return res.sendStatus(500)
+    } catch (err) {
+        if (err instanceof Error) {
+            console.log(err.message)
+            return res.status(500).send(err.message)
+        }
+        return res.status(500).send("An error occured while trying to get tasks.");
+    }
+  })
+// -----------------------------------------------------
 
 
 taskRouter.post("/addTask", jsonParser, (req, res) => { 

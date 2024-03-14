@@ -15,6 +15,8 @@ const userService_1 = require("../services/userService");
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 const studentRouter = (0, express_1.Router)();
+
+
 studentRouter.get("/getAllStudents", (req, res) => {
     (0, userService_1.getAllStudents)()
         .then((students) => __awaiter(void 0, void 0, void 0, function* () {
