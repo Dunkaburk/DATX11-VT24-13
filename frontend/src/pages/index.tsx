@@ -4,24 +4,25 @@ import styles from "./index.module.css";
 import { useState, useEffect } from "react";
 import Card from "@/components/Card";
 import Link from "next/link";
+type module = { name: string; }
 
 export default function Home() {
-  const [cat, useCat] = useState({ categories: [] }); // https://www.youtube.com/watch?v=v0nvwwdeV6I
-  const [assignment, useAssignment] = useState({ assignments: [] });
+  const [module, useModule] = useState([]); // https://www.youtube.com/watch?v=v0nvwwdeV6I
+  const [task, useTask] = useState([]);
   const changeCategory = (category: string) => {
     callAPI({
       route: `/api/category/get/${category}`,
       method: "GET",
       data: {},
     }).then((res) => {
-      useAssignment(res);
+      useTask(res);
       console.log(res);
     });
   };
   useEffect(() => {
-    callAPI({ route: "/api/category/getAll", method: "GET", data: {} }).then(
+    callAPI({ route: "/api/module/getModules", method: "GET", data: {} }).then(
       (res) => {
-        useCat(res);
+        useModule(res);
       }
     );
   }, []);
@@ -30,29 +31,29 @@ export default function Home() {
     <main className={styles.main}>
       <div
         className={
-          assignment.assignments.length > 0
+          task.length > 0
             ? styles.assignmentWheel
             : styles.assignmentList
         }>
-        {cat.categories ? (
-          cat.categories.map((category) => (
+        {module.length > 0 ? (
+          module.map((mod: module) => (
             <Card
-              title={category}
-              onClick={(categor) => {
-                changeCategory(categor);
+              title={mod.name}
+              onClick={(mod) => {
+                changeCategory(mod);
               }}
-              id={category}
-              key={category}
+              id={mod.name}
+              key={mod.name}
             />
           ))
         ) : (
           <div>Loading...</div>
         )}
       </div>
-      {assignment.assignments ? (
-        assignment.assignments.map((assignment) => (
-          <Link href={`/assignments/${assignment}`}>
-            <Card title={assignment} id={assignment} key={assignment} />
+      {task.length > 0 ? (
+        task.map((tas) => (
+          <Link href={`/assignments/${tas}`}>
+            <Card title={tas} id={tas} key={tas} />
           </Link>
         ))
       ) : (
