@@ -42,6 +42,7 @@ export default function Home() {
               onClick={(mod) => {
                 changeCategory(mod);
               }}
+              classname={styles.moduleCard}
               id={mod.name}
               key={mod.name}
             />
