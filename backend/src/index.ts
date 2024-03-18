@@ -1,17 +1,13 @@
 import { config } from "dotenv";
 import express from "express";
 import taskRouter from "./routers/taskRouter";
-import categoryRouter from "./routers/categoryRouter";
 import userRouter from "./routers/userRouter";
 import moduleRouter from "./routers/moduleRouter";
-
 
 const app = express();
 config();
 
-
 app.use("/task", taskRouter);
-app.use("/category", categoryRouter);
 app.use("/user", userRouter);
 app.use("/module", moduleRouter);
 

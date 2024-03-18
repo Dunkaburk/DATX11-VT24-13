@@ -29,7 +29,38 @@ export async function getModuleTasks(moduleName: string) {
                     id: true,
                     title: true,
 					level: true
-                }
+                },
+				orderBy: {
+					level: 'asc'
+				}
+            }
+        }
+	})
+}
+
+export async function getModuleTasksByUser(moduleName: string, userId: string) {
+	return await prisma.module.findUniqueOrThrow({
+		where: {
+			name: moduleName
+		},
+        include: {
+            tasks: {
+                select: {
+                    id: true,
+                    title: true,
+					level: true,
+					solvedTasks: {
+						select: {
+							solutionAccepted: true
+						},
+						where: {
+							userId: userId
+						}
+					}
+                },
+				orderBy: {
+					level: 'asc'
+				}
             }
         }
 	})
