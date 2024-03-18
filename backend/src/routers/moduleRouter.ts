@@ -7,22 +7,22 @@ var jsonParser = bodyParser.json()
 const moduleRouter = Router();
 
 moduleRouter.get("/getModules", jsonParser, (req, res) => {
-    getModules()
-		.then(async modules => {
-			res.json(modules).status(200).send();
+	getModules()
+		.then((modules) => {
+			res.json(modules).status(200);
 		})
-		.catch(async (e) => {
+		.catch((e) => {
 			console.error(e);
 			res.status(500).send("An error occured. Check terminal.");
 		})
-        .finally(async () => {
-            await prisma.$disconnect();
-        })
+		.finally(async () => {
+			await prisma.$disconnect();
+		})
 });
 
 //Returns a list with id and name of each task in a module
 moduleRouter.get("/getModuleTasks", jsonParser, (req, res) => {
-    const data = req.body;
+	const data = req.body;
 	const id = data.id;
 	const module = data.module;
 	if (!module || !id) {
@@ -31,18 +31,18 @@ moduleRouter.get("/getModuleTasks", jsonParser, (req, res) => {
 				 	id = ${id}, name = ${module}`);
 		return;
 	}
-    getModuleTasks(module)
-        .then(result => {
-            console.log(result);
-            res.json(result.tasks).status(200).send("fetched stuff");
-        })
-        .catch((e) => {
-            console.error(e);
-            res.status(500).send("An error occured. Check terminal.");
-        })
-        .finally(async () => {
-            await prisma.$disconnect();
-        })
+	getModuleTasks(module)
+		.then(result => {
+			console.log(result);
+			res.json(result.tasks).status(200).send("fetched stuff");
+		})
+		.catch((e) => {
+			console.error(e);
+			res.status(500).send("An error occured. Check terminal.");
+		})
+		.finally(async () => {
+			await prisma.$disconnect();
+		})
 });
 
 moduleRouter.post("/addModule", jsonParser, (req, res) => {
@@ -58,7 +58,7 @@ moduleRouter.post("/addModule", jsonParser, (req, res) => {
 		})
 		.catch(async (e) => {
 			var errorMessage = "An error occured while trying to add module: "
-			if(e.code === 'P2002') errorMessage += "A module already exists with this name."
+			if (e.code === 'P2002') errorMessage += "A module already exists with this name."
 			await prisma.$disconnect()
 			console.error(errorMessage)
 			res.status(500).send(errorMessage);

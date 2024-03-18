@@ -4,14 +4,14 @@ import styles from "./index.module.css";
 import { useState, useEffect } from "react";
 import Card from "@/components/Card";
 import Link from "next/link";
-type module = { name: string; }
 
 export default function Home() {
   const [module, useModule] = useState([]); // https://www.youtube.com/watch?v=v0nvwwdeV6I
   const [task, useTask] = useState([]);
   const changeCategory = (category: string) => {
+    console.log(category);
     callAPI({
-      route: `/api/category/get/${category}`,
+      route: `/api/moduule/getModules`,
       method: "GET",
       data: {},
     }).then((res) => {
@@ -31,12 +31,12 @@ export default function Home() {
     <main className={styles.main}>
       <div
         className={
-          task.length > 0
-            ? styles.assignmentWheel
-            : styles.assignmentList
+          task
+            ? styles.assignmentList
+            : styles.assignmentWheel
         }>
         {module.length > 0 ? (
-          module.map((mod: module) => (
+          module.map((mod: any) => (
             <Card
               title={mod.name}
               onClick={(mod) => {
@@ -50,15 +50,17 @@ export default function Home() {
           <div>Loading...</div>
         )}
       </div>
-      {task.length > 0 ? (
+
+      {task ? (
         task.map((tas) => (
-          <Link href={`/assignments/${tas}`}>
+          <Link key={tas} href={`/assignments/${tas}`}>
             <Card title={tas} id={tas} key={tas} />
           </Link>
         ))
       ) : (
         <></>
-      )}
-    </main>
+      )
+      }
+    </main >
   );
 }
