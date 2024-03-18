@@ -5,9 +5,15 @@ export async function getModules() {
 }
 
 export async function addModule(name: string) {
-	await prisma.module.create({
-		data: {
+	await prisma.module.upsert({
+		where: {
             name: name
+		},
+		update: {
+			name: name
+		},
+		create: {
+			name: name
 		}
 	})
 }
@@ -21,7 +27,8 @@ export async function getModuleTasks(moduleName: string) {
             tasks: {
                 select: {
                     id: true,
-                    title: true
+                    title: true,
+					level: true
                 }
             }
         }

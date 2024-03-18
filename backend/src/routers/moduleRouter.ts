@@ -25,7 +25,7 @@ moduleRouter.get("/getModuleTasks", jsonParser, (req, res) => {
     const data = req.body;
 	const id = data.id;
 	const module = data.module;
-	if (!module || !id) {
+	if (!module /*|| !id*/) {
 		res.status(404).send(`An error occured while trying to fetch tasks: Missing information.
 					Following values were received:
 				 	id = ${id}, name = ${module}`);
@@ -33,8 +33,7 @@ moduleRouter.get("/getModuleTasks", jsonParser, (req, res) => {
 	}
     getModuleTasks(module)
         .then(result => {
-            console.log(result);
-            res.json(result.tasks).status(200).send("fetched stuff");
+            res.json(result.tasks).status(200).send();
         })
         .catch((e) => {
             console.error(e);
@@ -52,17 +51,18 @@ moduleRouter.post("/addModule", jsonParser, (req, res) => {
 		return;
 	}
 	addModule(name)
-		.then(async () => {
-			await prisma.$disconnect()
+		.then(() => {
 			res.status(200).send();
 		})
-		.catch(async (e) => {
+		.catch((e) => {
 			var errorMessage = "An error occured while trying to add module: "
 			if(e.code === 'P2002') errorMessage += "A module already exists with this name."
-			await prisma.$disconnect()
 			console.error(errorMessage)
 			res.status(500).send(errorMessage);
 		})
+        .finally(async () => {
+            await prisma.$disconnect();
+        })
 })
 
 export default moduleRouter;

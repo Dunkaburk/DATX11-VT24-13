@@ -23,7 +23,7 @@ model User {
 
 model Task {
   id            Int           @id @default(autoincrement())
-  title         String        @db.VarChar(255)
+  title         String        @db.VarChar(255) @unique
   description   String
   code          String
   solution      String
@@ -33,13 +33,14 @@ model Task {
 }
 
 model SolvedTasks {
-  user      User    @relation(fields: [userId], references: [id])
-  userId    String
-  task      Task    @relation(fields: [taskId], references: [id])
-  taskId    Int
-  solution  String
-  noOfTries Int
-  @@id([userId, taskId])
+  user              User    @relation(fields: [userId], references: [id])
+  userId            String
+  task              Task    @relation(fields: [taskId], references: [id])
+  taskId            Int
+  solution          String
+  noOfTries         Int     @default(1)
+  solutionAccepted  Boolean @default(false)
+  @@id(name: "solvedTaskId", [userId, taskId])
 }
 
 model Module {

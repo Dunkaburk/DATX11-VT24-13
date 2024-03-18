@@ -21,17 +21,13 @@ studentRouter.get("/getAllStudents", (req, res) => {
 
 studentRouter.post("/addUser", jsonParser, (req, res) => {
 	const data = req.body;
-	const id = data.id ? data.id : null;
-	const name = data.name ? data.name : null;
-	const course = data.course ? data.course : null;
-	const role =  data.role ? data.role : null;
-	if (!id || !name || !course || !role) {
+	if (!data.id || !data.name || !data.course || !data.role) {
 		res.status(404).send(`An error occured while trying to add user: Missing information.
 					Following values were received:
-				 	id = ${id}, name = ${name}, course = ${course}, role = ${role}`);
+				 	id = ${data.id}, name = ${data.name}, course = ${data.course}, role = ${data.role}`);
 		return;
 	}
-	addUser(id, name, course, role)
+	addUser(data.id, data.name, data.course, data.role)
 		.then(async () => {
 			await prisma.$disconnect();
 			res.status(200).send();
