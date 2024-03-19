@@ -7,6 +7,12 @@ var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
 const taskRouter = Router();
 
+
+taskRouter.get("/", (req, res) => { 
+    res.status(200).send("Welcome to the task router. Please use the /task/:id endpoint to get a specific task.")
+});
+
+
 taskRouter.get("/next", (req, res) => { res.status(501).send("OoOps, not implemented") });
 taskRouter.get("/previous", (req, res) => { res.status(501).send("OoOps, not implemented") });
 taskRouter.post("/submit", (req, res) => { res.status(501).send("OoOps, not implemented") });
