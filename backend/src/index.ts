@@ -1,17 +1,15 @@
 import { config } from "dotenv";
 import express from "express";
-import assignmentRouter from "./routers/assignmentRouter";
-import categoryRouter from "./routers/categoryRouter";
-import studentRouter from "./routers/studentRouter";
-
+import taskRouter from "./routers/taskRouter";
+import userRouter from "./routers/userRouter";
+import moduleRouter from "./routers/moduleRouter";
 
 const app = express();
 config();
 
-
-app.use("/assignments", assignmentRouter);
-app.use("/category", categoryRouter);
-app.use("/student", studentRouter)
+app.use("/task", taskRouter);
+app.use("/user", userRouter);
+app.use("/module", moduleRouter);
 
 
 app.get("/:name", (req, res) => {
