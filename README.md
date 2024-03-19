@@ -17,15 +17,6 @@ DATX11-24-13_Python Tutorial Package
      npm install
     ```
     ```
-     npx prisma generate
-    ```
-
-3. Initiera databas
-    ```
-     npx prisma migrate dev
-    ```
-    Populera databas med testdata
-    ```
-     npx prisma db seed
+     npm run backend_setup
     ```
 
