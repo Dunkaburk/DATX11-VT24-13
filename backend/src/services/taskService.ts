@@ -3,18 +3,18 @@ import { prisma } from "./prisma"
 
 
 export async function addTask(title: string, description: string, code: string, solution: string, level: Level, moduleNames: string[]) {
-	return await prisma.task.create({
-		data: {
+    return await prisma.task.create({
+        data: {
             title: title,
             description: description,
             code: code,
             solution: solution,
             level: level,
             modules: {
-                connect: moduleNames.map(name => ({name}))
+                connect: moduleNames.map(name => ({ name }))
             }
-		}
-	})
+        }
+    })
 }
 
 export async function submitSolution(userId: string, taskId: number, solution: string, solutionAccepted: boolean) {
@@ -28,7 +28,7 @@ export async function submitSolution(userId: string, taskId: number, solution: s
         update: {
             solution: solution,
             solutionAccepted: solutionAccepted,
-            noOfTries: {increment: 1}
+            noOfTries: { increment: 1 }
         },
         create: {
             userId: userId,

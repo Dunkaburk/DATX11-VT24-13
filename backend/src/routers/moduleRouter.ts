@@ -8,7 +8,7 @@ var jsonParser = bodyParser.json()
 const moduleRouter = Router();
 
 moduleRouter.get("/getModules", jsonParser, (req, res) => {
-    getModules()
+	getModules()
 		.then(async modules => {
 			res.json(modules).status(200).send();
 		})
@@ -16,41 +16,41 @@ moduleRouter.get("/getModules", jsonParser, (req, res) => {
 			console.error(e);
 			res.status(500).send("An error occured. Check terminal.");
 		})
-        .finally(async () => {
-            await prisma.$disconnect();
-        })
+		.finally(async () => {
+			await prisma.$disconnect();
+		})
 });
 
 moduleRouter.get("/getModuleTasks", jsonParser, (req, res) => {
-    const data = req.body;
+	const data = req.body;
 	if (!data.module) {
 		res.status(500).send("Error: invalid JSON");
 		return;
 	}
-	if(data.userId) {
+	if (data.userId) {
 		getModuleTasksByUser(data.module, data.userId)
-        .then(result => {
-            res.json(result.tasks).status(200);
-        })
-        .catch((e) => {
-            let errorMessage = handleError(e);
-            res.status(500).send(errorMessage);
-        })
-        .finally(async () => {
-            await prisma.$disconnect();
-        })
+			.then(result => {
+				res.json(result.tasks).status(200);
+			})
+			.catch((e) => {
+				let errorMessage = handleError(e);
+				res.status(500).send(errorMessage);
+			})
+			.finally(async () => {
+				await prisma.$disconnect();
+			})
 	} else {
 		getModuleTasks(data.module)
-        .then(result => {
-            res.json(result.tasks).status(200);
-        })
-        .catch((e) => {
-            let errorMessage = handleError(e);
-            res.status(500).send(errorMessage);
-        })
-        .finally(async () => {
-            await prisma.$disconnect();
-        })
+			.then(result => {
+				res.json(result.tasks).status(200);
+			})
+			.catch((e) => {
+				let errorMessage = handleError(e);
+				res.status(500).send(errorMessage);
+			})
+			.finally(async () => {
+				await prisma.$disconnect();
+			})
 	}
 });
 
@@ -66,11 +66,11 @@ moduleRouter.post("/addModule", jsonParser, (req, res) => {
 		})
 		.catch((e) => {
 			let errorMessage = handleError(e);
-            res.status(500).send(errorMessage);
+			res.status(500).send(errorMessage);
 		})
-        .finally(async () => {
-            await prisma.$disconnect();
-        })
+		.finally(async () => {
+			await prisma.$disconnect();
+		})
 })
 
 export default moduleRouter;

@@ -19,8 +19,8 @@ studentRouter.get("/getAllStudents", (req, res) => {
 			res.status(500).send(errorMessage);
 		})
 		.finally(async () => {
-            await prisma.$disconnect();
-        })
+			await prisma.$disconnect();
+		})
 })
 
 studentRouter.get("/getStudent", jsonParser, (req, res) => {
@@ -46,8 +46,8 @@ function getUserByRole(req: Request, res: Response, role: Role) {
 			res.status(500).send(errorMessage);
 		})
 		.finally(async () => {
-            await prisma.$disconnect();
-        })
+			await prisma.$disconnect();
+		})
 }
 
 studentRouter.post("/addStudent", jsonParser, (req, res) => {
@@ -70,11 +70,11 @@ function addUserByRole(req: Request, res: Response, role: Role) {
 		})
 		.catch((e) => {
 			let errorMessage = handleError(e);
-            res.status(500).send(errorMessage);
+			res.status(500).send(errorMessage);
 		})
 		.finally(async () => {
-            await prisma.$disconnect();
-        })
+			await prisma.$disconnect();
+		})
 }
 
 studentRouter.post("/changeName", jsonParser, (req, res) => {
@@ -89,11 +89,11 @@ studentRouter.post("/changeName", jsonParser, (req, res) => {
 		})
 		.catch((e) => {
 			let errorMessage = handleError(e);
-            res.status(500).send(errorMessage);
+			res.status(500).send(errorMessage);
 		})
 		.finally(async () => {
-            await prisma.$disconnect();
-        })
+			await prisma.$disconnect();
+		})
 })
 
 export default studentRouter;

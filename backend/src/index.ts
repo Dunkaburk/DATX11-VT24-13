@@ -1,4 +1,5 @@
 import { config } from "dotenv";
+import cors from 'cors';
 import express from "express";
 import taskRouter from "./routers/taskRouter";
 import userRouter from "./routers/userRouter";

@@ -39,8 +39,8 @@ export async function addUser(id: string, name: string, course: string, role: Ro
 			role: role
 		},
 		create: {
-			id: 	id,
-			name: 	name,
+			id: id,
+			name: name,
 			course: course,
 			role: role
 		}

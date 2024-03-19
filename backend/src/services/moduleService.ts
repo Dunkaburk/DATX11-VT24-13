@@ -7,7 +7,7 @@ export async function getModules() {
 export async function addModule(name: string) {
 	await prisma.module.upsert({
 		where: {
-            name: name
+			name: name
 		},
 		update: {
 			name: name
@@ -23,18 +23,18 @@ export async function getModuleTasks(moduleName: string) {
 		where: {
 			name: moduleName
 		},
-        include: {
-            tasks: {
-                select: {
-                    id: true,
-                    title: true,
+		include: {
+			tasks: {
+				select: {
+					id: true,
+					title: true,
 					level: true
-                },
+				},
 				orderBy: {
 					level: 'asc'
 				}
-            }
-        }
+			}
+		}
 	})
 }
 
@@ -43,11 +43,11 @@ export async function getModuleTasksByUser(moduleName: string, userId: string) {
 		where: {
 			name: moduleName
 		},
-        include: {
-            tasks: {
-                select: {
-                    id: true,
-                    title: true,
+		include: {
+			tasks: {
+				select: {
+					id: true,
+					title: true,
 					level: true,
 					solvedTasks: {
 						select: {
@@ -57,11 +57,11 @@ export async function getModuleTasksByUser(moduleName: string, userId: string) {
 							userId: userId
 						}
 					}
-                },
+				},
 				orderBy: {
 					level: 'asc'
 				}
-            }
-        }
+			}
+		}
 	})
 }
