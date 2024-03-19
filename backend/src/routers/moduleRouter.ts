@@ -10,7 +10,7 @@ const moduleRouter = Router();
 moduleRouter.get("/getModules", jsonParser, (req, res) => {
 	getModules()
 		.then(async modules => {
-			res.json(modules).status(200).send();
+			res.json(modules).status(200);
 		})
 		.catch(async (e) => {
 			console.error(e);
@@ -21,8 +21,9 @@ moduleRouter.get("/getModules", jsonParser, (req, res) => {
 		})
 });
 
-moduleRouter.get("/getModuleTasks", jsonParser, (req, res) => {
-	const data = req.body;
+moduleRouter.get("/getModuleTasks/:module/:userId?", jsonParser, (req, res) => {
+	const data = req.params;
+	console.log(data);
 	if (!data.module) {
 		res.status(500).send("Error: invalid JSON");
 		return;

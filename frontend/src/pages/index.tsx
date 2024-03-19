@@ -11,9 +11,9 @@ export default function Home() {
   const changeCategory = (category: string) => {
     console.log(category);
     callAPI({
-      route: `/api/moduule/getModules`,
+      route: `/api/module/getModuleTasks/${category}`,
       method: "GET",
-      data: {},
+      data: {}
     }).then((res) => {
       useTask(res);
       console.log(res);
@@ -42,7 +42,6 @@ export default function Home() {
               onClick={(mod) => {
                 changeCategory(mod);
               }}
-              classname={styles.moduleCard}
               id={mod.name}
               key={mod.name}
             />
@@ -53,9 +52,9 @@ export default function Home() {
       </div>
 
       {task ? (
-        task.map((tas) => (
-          <Link key={tas} href={`/assignments/${tas}`}>
-            <Card title={tas} id={tas} key={tas} />
+        task.map((tas: any) => (
+          <Link key={tas.id} href={`/assignments/${tas.id}`}>
+            <Card title={tas.title} id={tas.id} key={tas.id} />
           </Link>
         ))
       ) : (
