@@ -25,8 +25,7 @@ const callAPI = async ({ route, method, data }: ApiCall) => {
 
 const sendRequest = async ({ route, method, data }: ApiCall) => {
 	switch (method) {
-		case "GET":
-			return await axios.get(route);
+		case "GET": return await axios.get(route);
 		case "POST":
 			return await axios.post(route, data);
 		case "PUT":

@@ -8,12 +8,12 @@ import Link from "next/link";
 export default function Home() {
   const [module, useModule] = useState([]); // https://www.youtube.com/watch?v=v0nvwwdeV6I
   const [task, useTask] = useState([]);
-  const changeCategory = (category: string) => {
+  const changeModule = (category: string) => {
     console.log(category);
     callAPI({
-      route: `/api/moduule/getModules`,
+      route: `/api/module/getModuleTasks/${category}`,
       method: "GET",
-      data: {},
+      data: {}
     }).then((res) => {
       useTask(res);
       console.log(res);
@@ -32,17 +32,16 @@ export default function Home() {
       <div
         className={
           task
-            ? styles.assignmentList
-            : styles.assignmentWheel
+            ? styles.moduleList
+            : styles.moduleWheel
         }>
         {module.length > 0 ? (
           module.map((mod: any) => (
             <Card
               title={mod.name}
               onClick={(mod) => {
-                changeCategory(mod);
+                changeModule(mod);
               }}
-              classname={styles.moduleCard}
               id={mod.name}
               key={mod.name}
             />
@@ -53,9 +52,9 @@ export default function Home() {
       </div>
 
       {task ? (
-        task.map((tas) => (
-          <Link key={tas} href={`/assignments/${tas}`}>
-            <Card title={tas} id={tas} key={tas} />
+        task.map((task: any) => (
+          <Link key={task.id} href={`/tasks/${task.id}`}>
+            <Card title={task.title} id={task.id} key={task.id} />
           </Link>
         ))
       ) : (

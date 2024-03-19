@@ -1,4 +1,4 @@
-.assignmentList {
+.moduleList {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,14 +6,10 @@
   margin-top: 20px;
 }
 
-.assignmentWheel {
+.moduleWheel {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   margin-top: 20px;
-}
-
-.moduleCard {
-  background-color: red;
 }
