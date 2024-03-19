@@ -12,7 +12,7 @@ const studentRouter = Router();
 studentRouter.get("/getAllStudents", (req, res) => {
 	getAllStudents()
 		.then(students => {
-			res.json(students).status(200).send();
+			res.json(students).status(200);
 		})
 		.catch((e) => {
 			let errorMessage = handleError(e);
@@ -39,7 +39,7 @@ function getUserByRole(req: Request, res: Response, role: Role) {
 	}
 	getUser(data.id, role)
 		.then(user => {
-			res.json(user).status(200).send();
+			res.json(user).status(200);
 		})
 		.catch((e) => {
 			let errorMessage = handleError(e);

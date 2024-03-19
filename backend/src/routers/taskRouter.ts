@@ -18,7 +18,7 @@ taskRouter.get("/getTask", jsonParser, (req, res) => {
     if(data.userId) {
         getTaskByUser(data.userId, data.taskId)
         .then(task => {
-            res.json(task).status(200).send();
+            res.json(task).status(200);
         })
         .catch((e) => {
             let errorMessage = handleError(e);
@@ -30,7 +30,7 @@ taskRouter.get("/getTask", jsonParser, (req, res) => {
     } else {
         getTask(data.taskId)
         .then(task => {
-            res.json(task).status(200).send();
+            res.json(task).status(200);
         })
         .catch((e) => {
             let errorMessage = handleError(e);

@@ -30,7 +30,7 @@ moduleRouter.get("/getModuleTasks", jsonParser, (req, res) => {
 	if(data.userId) {
 		getModuleTasksByUser(data.module, data.userId)
         .then(result => {
-            res.json(result.tasks).status(200).send();
+            res.json(result.tasks).status(200);
         })
         .catch((e) => {
             let errorMessage = handleError(e);
@@ -42,7 +42,7 @@ moduleRouter.get("/getModuleTasks", jsonParser, (req, res) => {
 	} else {
 		getModuleTasks(data.module)
         .then(result => {
-            res.json(result.tasks).status(200).send();
+            res.json(result.tasks).status(200);
         })
         .catch((e) => {
             let errorMessage = handleError(e);
