@@ -12,9 +12,6 @@ export default function Home() {
 	useEffect(() => {
 		callAPI({ route: "/api/category/getAll", method: "GET", data: {} }).then((res) => useCat(res));
 	}, []);
-	/* useEffect(() => {
-
-	}, []); */
 
 
 	return (
