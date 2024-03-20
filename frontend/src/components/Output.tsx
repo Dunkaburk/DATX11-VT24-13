@@ -1,6 +1,6 @@
 import { Box, Text, Button, useToast } from "@chakra-ui/react"
 import { FC, MutableRefObject, useState } from "react";
-import { executeCode } from "../api";
+import { executeCode } from "../hooks/api";
 
 
 interface OutputProps {

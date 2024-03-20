@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LANGUAGE_VERSIONS } from "./constants";
+import { LANGUAGE_VERSIONS } from "../pages/constants";
 
 interface executeCodeProps {
     language: string;
