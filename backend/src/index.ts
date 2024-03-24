@@ -14,9 +14,9 @@ app.use("/user", userRouter);
 app.use("/module", moduleRouter);
 
 
-app.get("/:name", (req, res) => {
+/*app.get("/:name", (req, res) => {
 	const name = req.params.name;
 	res.status(200).send(`Hej ${name}`);
-});
+});*/
 
 app.listen(process.env.PORT || 3000, () => { console.log(`Server started on ${process.env.PORT || 3000}`) });
