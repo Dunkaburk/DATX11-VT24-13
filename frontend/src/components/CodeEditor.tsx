@@ -23,23 +23,21 @@ const CodeEditor = () => {
     }
 
     return (
-        <Box>
-            <HStack spacing={4}>
-                <Box w="50%">
-                    <LanguageSelector language={language} onSelect={onSelect} />
-                    <Editor 
-                        height="75vh" 
-                        theme="vs-dark" 
-                        language={language} 
-                        defaultValue={CODE_SNIPPETS[language]}
-                        onMount={onMount}
-                        value={value}
-                        onChange={(value) => setValue(value || "")}
-                    />
-                </Box>
-                <Output editorRef={editorRef} language={language}/>
-            </HStack>
-        </Box>
+        <HStack spacing={4}>
+            <Box w="50%">
+                <LanguageSelector language={language} onSelect={onSelect} />
+                <Editor 
+                    height="75vh" 
+                    theme="vs-dark" 
+                    language={language} 
+                    defaultValue={CODE_SNIPPETS[language]}
+                    onMount={onMount}
+                    value={value}
+                    onChange={(value) => setValue(value || "")}
+                />
+            </Box>
+            <Output editorRef={editorRef} language={language}/>
+        </HStack>
     )
 }
 
