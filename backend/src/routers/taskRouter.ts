@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { prisma } from "../services/prisma";
-import { addTask, submitSolution, getTask, getTaskByUser } from "../services/taskService";
+import { addTask, saveSolution, submitSolution, getTask, getTaskByUser } from "../services/taskService";
 import { Level } from "@prisma/client";
+import { Request, Response } from "express";
 import { handleError } from "../services/errorService";
 
 var bodyParser = require('body-parser')
@@ -9,14 +10,16 @@ var jsonParser = bodyParser.json()
 const taskRouter = Router();
 
 
-taskRouter.get("/getTask", jsonParser, (req, res) => {
-    const data = req.body;
-    if (!data.taskId) {
+taskRouter.get("/getTask/:taskId/:userId?", (req, res) => {
+    const data = req.params;
+    const taskId = Number(data.taskId);
+    const userId = data.userId;
+    if (!taskId) {
         res.status(501).send(`Error: must have a taskId.`);
         return;
     }
-    if (data.userId) {
-        getTaskByUser(data.userId, data.taskId)
+    if (userId) {
+        getTaskByUser(userId, taskId)
             .then(task => {
                 res.json(task).status(200);
             })
@@ -28,7 +31,7 @@ taskRouter.get("/getTask", jsonParser, (req, res) => {
                 await prisma.$disconnect();
             })
     } else {
-        getTask(data.taskId)
+        getTask(taskId)
             .then(task => {
                 res.json(task).status(200);
             })
@@ -40,6 +43,25 @@ taskRouter.get("/getTask", jsonParser, (req, res) => {
                 await prisma.$disconnect();
             })
     }
+});
+
+taskRouter.post("/save", jsonParser, (req, res) => {
+    const data = req.body;
+    if (!data.userId || !data.taskId || !data.solution) {
+        res.status(500).send("Error: invalid JSON");
+        return;
+    }
+    saveSolution(data.userId, data.taskId, data.solution)
+        .then(() => {
+            res.status(200).send("Task successfully saved.");
+        })
+        .catch((e) => {
+            let errorMessage = handleError(e);
+            res.status(500).send(errorMessage);
+        })
+        .finally(async () => {
+            await prisma.$disconnect();
+        })
 });
 
 taskRouter.post("/submit", jsonParser, (req, res) => {
@@ -60,21 +82,28 @@ taskRouter.post("/submit", jsonParser, (req, res) => {
         .finally(async () => {
             await prisma.$disconnect();
         })
-
 });
 
-taskRouter.post("/addTask", jsonParser, (req, res) => {
+taskRouter.post("/addBeginnerTask", jsonParser, (req, res) => {
+    addTaskByLevel(req, res, Level.BEGINNER);
+});
+
+taskRouter.post("/addIntermediateTask", jsonParser, (req, res) => {
+    addTaskByLevel(req, res, Level.INTERMEDIATE);
+});
+
+taskRouter.post("/addAdvancedTask", jsonParser, (req, res) => {
+    addTaskByLevel(req, res, Level.ADVANCED);
+});
+
+function addTaskByLevel(req: Request, res: Response, level: Level) {
     const data = req.body;
-    if (!data.title || !data.description || !data.code || !data.solution || !data.level) {
+    if (!data.title || !data.description || !data.code || !data.solution) {
         res.status(500).send("Error: invalid JSON");
         return;
     }
-    if (!isValidLevel(data.level)) {
-        res.status(404).send("Invalid level sent.");
-        return;
-    }
 
-    addTask(data.title, data.description, data.code, data.solution, data.level, data.modules)
+    addTask(data.title, data.description, data.code, data.solution, level, data.modules)
         .then(async () => {
             res.status(200).send("Task added");
         })
@@ -85,10 +114,6 @@ taskRouter.post("/addTask", jsonParser, (req, res) => {
         .finally(async () => {
             await prisma.$disconnect();
         })
-});
-
-function isValidLevel(level: Level) {
-    return Object.values(Level).includes(level)
 }
 
 export default taskRouter;

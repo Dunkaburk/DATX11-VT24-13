@@ -17,6 +17,26 @@ export async function addTask(title: string, description: string, code: string, 
     })
 }
 
+export async function saveSolution(userId: string, taskId: number, solution: string) {
+    await prisma.solvedTasks.upsert({
+        where: {
+            solvedTaskId: {
+                userId: userId,
+                taskId: taskId
+            }
+        },
+        update: {
+            solution: solution
+        },
+        create: {
+            userId: userId,
+            taskId: taskId,
+            solution: solution,
+            noOfTries: 0
+        }
+    })
+}
+
 export async function submitSolution(userId: string, taskId: number, solution: string, solutionAccepted: boolean) {
     await prisma.solvedTasks.upsert({
         where: {

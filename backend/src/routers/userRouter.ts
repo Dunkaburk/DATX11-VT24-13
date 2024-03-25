@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { prisma } from "../services/prisma";
-import { addUser, getAllStudents, getUser, updateUserName } from "../services/userService";
+import { addUser, getAllStudents, getUser, getUserByRole, updateUserName } from "../services/userService";
 import { handleError } from "../services/errorService";
 import { Role } from "@prisma/client";
 import { Request, Response } from "express";
@@ -23,21 +23,21 @@ studentRouter.get("/getAllStudents", (req, res) => {
 		})
 })
 
-studentRouter.get("/getStudent", jsonParser, (req, res) => {
-	getUserByRole(req, res, Role.STUDENT)
+studentRouter.get("/getStudent/:id", (req, res) => {
+	getUserByDefinedRole(req, res, Role.STUDENT)
 })
 
-studentRouter.get("/getTeacher", jsonParser, (req, res) => {
-	getUserByRole(req, res, Role.TEACHER)
+studentRouter.get("/getTeacher/:id", jsonParser, (req, res) => {
+	getUserByDefinedRole(req, res, Role.TEACHER)
 })
 
-function getUserByRole(req: Request, res: Response, role: Role) {
-	const data = req.body;
+function getUserByDefinedRole(req: Request, res: Response, role: Role) {
+	const data = req.params;
 	if (!data.id) {
-		res.status(500).send("Error: invalid JSON");
+		res.status(500).send("Error: invalid parameters");
 		return;
 	}
-	getUser(data.id, role)
+	getUserByRole(data.id, role)
 		.then(user => {
 			res.json(user).status(200);
 		})
@@ -59,6 +59,29 @@ studentRouter.post("/addTeacher", jsonParser, (req, res) => {
 })
 
 function addUserByRole(req: Request, res: Response, role: Role) {
+	const data = req.body;
+	if (!data.id || !data.name || !data.course) {
+		res.status(500).send("Error: invalid JSON");
+		return;
+	}
+	getUser(data.id)
+		.then(user => {
+			if(user) {
+				res.status(500).send("Error: a user with this id already exists.");
+			} else {
+				executeAddUser(req, res, role);
+			}
+		})
+		.catch((e) => {
+			let errorMessage = handleError(e);
+			res.status(500).send(errorMessage);
+		})
+		.finally(async () => {
+			await prisma.$disconnect();
+		})
+}
+
+function executeAddUser(req: Request, res: Response, role: Role) {
 	const data = req.body;
 	if (!data.id || !data.name || !data.course) {
 		res.status(500).send("Error: invalid JSON");

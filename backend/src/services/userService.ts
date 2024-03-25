@@ -1,12 +1,27 @@
 import { Role } from "@prisma/client"
 import { prisma } from "./prisma"
 
-export async function getUser(userId: string, role: Role) {
+export async function getUser(userId: string) {
+	return await prisma.user.findUnique({
+		select: {
+			id: true,
+			name: true,
+			course: true,
+			role: true
+		},
+		where: {
+			id: userId
+		},
+	})
+}
+
+export async function getUserByRole(userId: string, role: Role) {
 	return await prisma.user.findUniqueOrThrow({
 		select: {
 			id: true,
 			name: true,
-			course: true
+			course: true,
+			role: true
 		},
 		where: {
 			id: userId,
@@ -29,16 +44,8 @@ export async function getAllStudents() {
 }
 
 export async function addUser(id: string, name: string, course: string, role: Role) {
-	await prisma.user.upsert({
-		where: {
-			id: id
-		},
-		update: {
-			name: name,
-			course: course,
-			role: role
-		},
-		create: {
+	await prisma.user.create({
+		data: {
 			id: id,
 			name: name,
 			course: course,
