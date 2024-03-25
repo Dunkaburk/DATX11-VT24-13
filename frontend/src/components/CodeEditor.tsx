@@ -8,33 +8,30 @@ import Output from "./Output";
 const CodeEditor = () => {
     const editorRef = useRef();
     const [value, setValue] = useState("");
-    const [language, setLanguage] = useState("python");
+    const language: string = "python";
 
     const onMount = (editor: any) => {
         editorRef.current = editor;
         editor.focus();
     }
 
-    const onSelect = (language: string) => {
-        setLanguage(language);
-        setValue(
-            CODE_SNIPPETS[language]
-        )
-    }
 
     return (
         <HStack spacing={4}>
             <Box w="50%">
-                <LanguageSelector language={language} onSelect={onSelect} />
-                <Editor 
-                    height="75vh" 
-                    theme="vs-dark" 
-                    language={language} 
-                    defaultValue={CODE_SNIPPETS[language]}
-                    onMount={onMount}
-                    value={value}
-                    onChange={(value) => setValue(value || "")}
-                />
+                <LanguageSelector language={language} />
+                <div style={{ border: "1px solid black" }}> {/* Wrapper div with black border */}
+                    <Editor 
+                        height="75vh" 
+                        theme="vs-light" 
+                        language={language} 
+                        defaultValue={CODE_SNIPPETS[language]}
+                        onMount={onMount}
+                        value={value}
+                        onChange={(value) => setValue(value || "")}
+                        options={{ minimap: { enabled: false } }}
+                    />
+                </div>
             </Box>
             <Output editorRef={editorRef} language={language}/>
         </HStack>

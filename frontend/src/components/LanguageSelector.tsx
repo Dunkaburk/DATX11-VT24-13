@@ -1,50 +1,17 @@
-import { Box, Button, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react"
+import { Box, Button, Menu, MenuButton, Text, Textarea } from "@chakra-ui/react"
 import { LANGUAGE_VERSIONS } from "../pages/constants"
-import { FC } from "react";
 
-const Languages = Object.entries(LANGUAGE_VERSIONS)
-
-interface LanguageSelectorProps {
+type LanguageSelectorProps = {
     language: string;
-    onSelect: (language: string) => void;
-}
-
-const ACTIVE_COLOR = "blue.400";
+};
   
-const LanguageSelector: FC<LanguageSelectorProps> = ({ language, onSelect }) => {
+const LanguageSelector = ({language}: LanguageSelectorProps) => {
     return (
         <Box ml={2} mb={4}>
-            <Text mb={2} fontSize='lg'>Language: </Text>
-            <Menu isLazy>
-                <MenuButton as={Button} >
-                    {language}
-                </MenuButton>
-                <MenuList bg="#110c1b">
-                    {
-                        Languages.map(([lang, version]) => (
-                            <MenuItem key={lang}
-                                color = {
-                                    lang === language ? ACTIVE_COLOR : ""
-                                }
-                                bg = {
-                                    lang === language ? "grey.900" : "transparent"
-                                }
-                                _hover = {{
-                                    color:ACTIVE_COLOR,
-                                    bg:"grey.900"
-
-                                }}
-                            onClick={() => onSelect(lang)}
-                            >{lang}
-                                &nbsp;
-                                <Text as="span" color="grey.600" fontSize="sm">
-                                    ({version})
-                                </Text>
-                            </MenuItem>
-                        ))
-                    }
-                </MenuList>
-            </Menu>
+            <Text mb={2} fontSize='lg' color={"black"}>Language: </Text>
+            <Button variant={"outline"} sx={{ cursor: "not-allowed", pointerEvents: "none" }} isActive={false} colorScheme={"blue"}>
+                {language}
+            </Button>
         </Box>
     )
 }

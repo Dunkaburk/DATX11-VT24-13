@@ -3,7 +3,7 @@ import CodeEditor from '../../components/CodeEditor';
 
 function CodeEditorBox() {
     return (
-      <Box minH="100vh" bg="#0f0a19" color="gray.500" px={6} py={8}>
+      <Box minH="100vh" bg="#ffffff" color="black" px={6} py={8}>
         <CodeEditor />
       </Box>
     );

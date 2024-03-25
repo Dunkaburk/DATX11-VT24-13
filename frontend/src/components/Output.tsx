@@ -38,10 +38,10 @@ const Output: FC<OutputProps> = ({editorRef, language}) => {
 
     return (
         <Box w="50%">
-            <Text mb={2} fontSize="lg">
-                Output 
+            <Text mb={2} fontSize="lg" color={"black"}>
+                Output:
             </Text> 
-            <Button variant="outline" colorScheme="green" mb={4} isLoading={isLoading} onClick={runCode}>
+            <Button colorScheme="blue" mb={4} isLoading={isLoading} onClick={runCode}>
                 Run Code
             </Button>
             <Box 
