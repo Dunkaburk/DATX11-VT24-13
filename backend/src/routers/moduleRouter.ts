@@ -21,9 +21,8 @@ moduleRouter.get("/getModules", jsonParser, (req, res) => {
 		})
 });
 
-moduleRouter.get("/getModuleTasks/:module/:userId?", jsonParser, (req, res) => {
+moduleRouter.get("/getModuleTasks/:module/:userId?", (req, res) => {
 	const data = req.params;
-	console.log(data);
 	if (!data.module) {
 		res.status(500).send("Error: invalid JSON");
 		return;

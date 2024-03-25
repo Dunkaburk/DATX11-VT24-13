@@ -1,13 +1,13 @@
 import { Level, PrismaClient, Role } from "@prisma/client";
-import { addUser } from "../src/services/userService";
+import { addUser, getUser } from "../src/services/userService";
 import { addTask, getTaskByTitle, submitSolution } from "../src/services/taskService";
 import { addModule } from "../src/services/moduleService";
 const prisma = new PrismaClient();
 
 async function main() {
-    addUser("cid1", "name1", "TDA555", Role.STUDENT);
-    addUser("cid2", "name2", "TDA555", Role.STUDENT);
-    addUser("cid3", "name3", "TDA555", Role.STUDENT);
+    addUserIfNotExisting("cid1", "name1", "TDA555", Role.STUDENT);
+    addUserIfNotExisting("cid2", "name2", "TDA555", Role.STUDENT);
+    addUserIfNotExisting("cid3", "name3", "TDA555", Role.STUDENT);
 
     addModule("Module1")
     addModule("Module2")
@@ -36,6 +36,18 @@ async function addTaskIfNotExisting(taskTitle: string, level: Level, modules: st
             if (e.code === 'P2025') {
                 return addTask(taskTitle, "Description of task", "starting code", "solution of task", level, modules).then(task => {return task.id});
             }
+        })
+}
+
+async function addUserIfNotExisting(userId: string, userName: string, course: string, role: Role) {
+    getUser(userId)
+        .then(user => {
+            if(!user) {
+                addUser(userId, userName, course, role);
+            }
+        })
+        .catch((e) => {
+            console.log(e);
         })
 }
 
