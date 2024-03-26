@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "esm": "^3.2.25",
+    "react-bootstrap": "^2.10.2"
+  }
+}

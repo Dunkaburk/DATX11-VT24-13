@@ -53,7 +53,7 @@ export default function Home() {
 
       {task ? (
         task.map((task: any) => (
-          <Link key={task.id} href={`/tasks/${task.id}`}>
+          <Link key={task.id} href={`/testpage`}>
             <Card title={task.title} id={task.id} key={task.id} />
           </Link>
         ))
