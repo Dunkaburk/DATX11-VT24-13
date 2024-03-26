@@ -6,18 +6,18 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
 	const router = useRouter();
-	const [assignment, loadAssignment] = useState({ categories: [] });
+	const [task, loadTask] = useState({ modules: [] });
 	useEffect(() => {
-		callAPI({ route: "/api/assignments/getAll", method: "GET", data: {} }).then(
+		callAPI({ route: `/api/task/getTask/${router.query.taskId}`, method: "GET", data: {} }).then(
 			(res) => {
-				loadAssignment(res);
+				loadTask(res);
 			}
 		);
 	}, []);
 
 	return (
 		<>
-			{router.query.assignmentId}:
+			{router.query.taskId}:
 		</>
 	);
 }
